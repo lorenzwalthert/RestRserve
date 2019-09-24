@@ -196,8 +196,8 @@ Write fatal error message.</p></li>
     <pre class="examples"><div class='input'><span class='co'># init logger</span>
 <span class='no'>logger</span> <span class='kw'>=</span> <span class='no'>Logger</span>$<span class='fu'>new</span>(<span class='st'>"info"</span>)
 <span class='co'># write info message</span>
-<span class='no'>logger</span>$<span class='fu'>info</span>(<span class='st'>"hello world"</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 12:42:21.391114","level":"INFO","name":"ROOT","pid":13747,"msg":"hello world"}</div><div class='input'><span class='co'># write extended log entry</span>
-<span class='no'>logger</span>$<span class='fu'>info</span>(<span class='st'>""</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>message</span> <span class='kw'>=</span> <span class='st'>"hello world"</span>, <span class='kw'>code</span> <span class='kw'>=</span> <span class='fl'>0L</span>))</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 12:42:21.392400","level":"INFO","name":"ROOT","pid":13747,"msg":"","context":{"message":"hello world","code":0}}</div><div class='input'>
+<span class='no'>logger</span>$<span class='fu'>info</span>(<span class='st'>"hello world"</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 16:40:08.848281","level":"INFO","name":"ROOT","pid":13640,"msg":"hello world"}</div><div class='input'><span class='co'># write extended log entry</span>
+<span class='no'>logger</span>$<span class='fu'>info</span>(<span class='st'>""</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>message</span> <span class='kw'>=</span> <span class='st'>"hello world"</span>, <span class='kw'>code</span> <span class='kw'>=</span> <span class='fl'>0L</span>))</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 16:40:08.849571","level":"INFO","name":"ROOT","pid":13640,"msg":"","context":{"message":"hello world","code":0}}</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -216,7 +216,7 @@ Write fatal error message.</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Dmitriy Selivanov, Artem Klevtsov.</p>
+  <p>Developed by Dmitriy Selivanov, Artem Klevtsov, <a href='https://rexy.ai'><a href="https://www.rexy.ai"><img src="https://s3-eu-west-1.amazonaws.com/rexy.ai/images/rexy-logo.svg" height="48" alt="rexy.ai"></a></a>.</p>
 </div>
 
 <div class="pkgdown">
