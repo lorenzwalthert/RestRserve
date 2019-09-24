@@ -102,7 +102,12 @@ verbosity. Log messages are in JSON format." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/dselivanov/RestRserve">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -117,7 +122,7 @@ verbosity. Log messages are in JSON format." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Simple logging utility</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/dselivanov/RestRserve/blob/master/R/logging.R'><code>R/logging.R</code></a></small>
     <div class="hidden name"><code>Logger.Rd</code></div>
     </div>
 
@@ -191,8 +196,8 @@ Write fatal error message.</p></li>
     <pre class="examples"><div class='input'><span class='co'># init logger</span>
 <span class='no'>logger</span> <span class='kw'>=</span> <span class='no'>Logger</span>$<span class='fu'>new</span>(<span class='st'>"info"</span>)
 <span class='co'># write info message</span>
-<span class='no'>logger</span>$<span class='fu'>info</span>(<span class='st'>"hello world"</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 11:03:05.584860","level":"INFO","name":"ROOT","pid":13500,"msg":"hello world"}</div><div class='input'><span class='co'># write extended log entry</span>
-<span class='no'>logger</span>$<span class='fu'>info</span>(<span class='st'>""</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>message</span> <span class='kw'>=</span> <span class='st'>"hello world"</span>, <span class='kw'>code</span> <span class='kw'>=</span> <span class='fl'>0L</span>))</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 11:03:05.586180","level":"INFO","name":"ROOT","pid":13500,"msg":"","context":{"message":"hello world","code":0}}</div><div class='input'>
+<span class='no'>logger</span>$<span class='fu'>info</span>(<span class='st'>"hello world"</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 12:42:21.391114","level":"INFO","name":"ROOT","pid":13747,"msg":"hello world"}</div><div class='input'><span class='co'># write extended log entry</span>
+<span class='no'>logger</span>$<span class='fu'>info</span>(<span class='st'>""</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>message</span> <span class='kw'>=</span> <span class='st'>"hello world"</span>, <span class='kw'>code</span> <span class='kw'>=</span> <span class='fl'>0L</span>))</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 12:42:21.392400","level":"INFO","name":"ROOT","pid":13747,"msg":"","context":{"message":"hello world","code":0}}</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
