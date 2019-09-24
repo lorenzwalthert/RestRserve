@@ -36,8 +36,11 @@
 
 
 <meta property="og:title" content="Helps to generate http error responses — HTTPError" />
-<meta property="og:description" content="Helps to generate http error responses.
-Contains RestRserve:::HTTPErrorFactory class for the exception in the user's code." />
+<meta property="og:description" content="Global Object which holds functions to raise common http error responses.
+Most of the time this class is used jointly with raise. 
+For example calling
+raise(HTTPError$bad_request(body = &quot;request is invalid&quot;)) from any place in the user code will
+interrupt request processing and return response with status code = 404 and body = &quot;request is invalid&quot;." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,8 +125,11 @@ Contains RestRserve:::HTTPErrorFactory class for the exception in the user's cod
     </div>
 
     <div class="ref-description">
-    <p>Helps to generate http error responses.
-Contains <code>RestRserve:::HTTPErrorFactory</code> class for the exception in the user's code.</p>
+    <p><strong>Global Object</strong> which holds functions to raise common http error responses.
+Most of the time this class is used jointly with <a href='raise.html'>raise</a>. <br />
+For example calling
+<code><a href='raise.html'>raise(HTTPError$bad_request(body = "request is invalid"))</a></code> from any place in the user code will
+interrupt request processing and return response with status code = 404 and body = "request is invalid".</p>
     </div>
 
 
@@ -136,9 +142,9 @@ Contains <code>RestRserve:::HTTPErrorFactory</code> class for the exception in t
     
 
 <ul>
-<li><p><code>content_type</code> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
+<li><p><strong><code>content_type</code></strong> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
 Type of the error response.</p></li>
-<li><p><code>encode</code> :: <code>function</code><br />
+<li><p><strong><code>encode</code></strong> :: <code>function</code><br />
 Function to encode response body.</p></li>
 </ul>
 
@@ -147,26 +153,128 @@ Function to encode response body.</p></li>
     
 
 <ul>
-<li><p><code>set_content_type(content_type)</code><br />
+<li><p><strong><code>set_content_type</code></strong><code>(content_type)</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code>self</code><br />
-Set content type of response.</p></li>
-<li><p><code>set_encode(encode)</code><br />
+Set content type of response.<br />
+<strong>NOTE</strong> that modifying HTTPError (for example with <code>HTTPError$set_content_type("application/json")</code>)
+will have global impact on RestRserve functionality.
+By default <code>HTTPError</code> is used by <a href='Application.html'>Application</a> in order to produce http errors (404, 500, etc).
+Hence changing <code>HTTPError</code> with <code>$set_content_type()</code> will impact not only user code,
+but also the errors format produced by RestRserve. Same holds for <code>$set_encode()</code> method below.</p></li>
+<li><p><strong><code>set_encode</code></strong><code>(encode)</code><br />
 <code>function</code> -&gt; <code>self</code><br />
 Set encode for the given content type.</p></li>
-<li><p><code>error(status_code, body, ...)</code><br />
-<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>, <code><a href='https://rdrr.io/r/base/raw.html'>raw()</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>, <code>...</code> -&gt; <a href='Response.html'>Response</a>
+<li><p><strong><code>error</code></strong><code>(status_code, body, ...)</code><br />
+<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>, <code><a href='https://rdrr.io/r/base/raw.html'>raw()</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>, <code>...</code> -&gt; <a href='Response.html'>Response</a><br />
 <code>...</code> - additional named arguments which will be pased to <code>Response$new(...)</code>.
-<code>headers</code> may be particularly useful.
-Generate HTTP error response</p></li>
-<li><p><code>reset()</code><br />
+<code>headers</code> may be particularly useful.<br />
+Generate HTTP error response with a given status code and body</p></li>
+<li><p><strong><code>reset</code></strong><code>()</code><br />
 -&gt; <code>self</code> <br />
 Resets <code>HTTPError</code> to the default RestRserve state.</p></li>
+<li><p><strong><code>bad_request</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>unauthorized</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>forbidden</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>not_found</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>method_not_allowed</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>not_acceptable</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>conflict</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>gone</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>length_required</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>precondition_failed</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>payload_too_large</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>uri_too_long</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>unsupported_media_type</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>range_not_satisfiable</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>unprocessable_entity</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>locked</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>failed_dependency</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>precondition_required</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>too_many_requests</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>request_header_fields_too_large</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>unavailable_for_legal_reasons</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>internal_server_error</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>not_implemented</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>bad_gateway</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>service_unavailable</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>gateway_timeout</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>version_not_supported</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>insufficient_storage</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>loop_detected</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.</p></li>
+<li><p><strong><code>network_authentication_required</code></strong><code>(...)</code><br />
+<code>...</code> -&gt; <code>[Response]</code><br />
+Generates corresponding http error.<br /></p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='raise.html'>raise</a> <a href='Application.html'>Application</a></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>check_list</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
+  <span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/list.html'>is.list</a></span>(<span class='no'>x</span>)) <span class='fu'><a href='raise.html'>raise</a></span>(<span class='no'>HTTPError</span>$<span class='fu'>bad_request</span>())
+  <span class='fu'><a href='https://rdrr.io/r/base/invisible.html'>invisible</a></span>(<span class='fl'>TRUE</span>)
+}
+<span class='fu'>check_list</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())
+<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>check_list</span>(<span class='fl'>1</span>), <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -175,6 +283,7 @@ Resets <code>HTTPError</code> to the default RestRserve state.</p></li>
       <li><a href="#fields">Fields</a></li>
       <li><a href="#methods">Methods</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

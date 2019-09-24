@@ -37,8 +37,8 @@
 
 <meta property="og:title" content="Creates application - RestRserve usage starts from here — Application" />
 <meta property="og:description" content="Creates Application object.
-Application converts user-supplied R code into high-performance
-REST API by allowing to easily register R functions for handling http-requests." />
+Application provides an interface for building high-performance
+REST API by registering R functions as handlers http requests." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,8 +124,8 @@ REST API by allowing to easily register R functions for handling http-requests."
 
     <div class="ref-description">
     <p>Creates Application object.
-Application converts user-supplied R code into high-performance
-REST API by allowing to easily register R functions for handling http-requests.</p>
+Application provides an interface for building high-performance
+REST API by registering R functions as handlers http requests.</p>
     </div>
 
 
@@ -141,10 +141,12 @@ REST API by allowing to easily register R functions for handling http-requests.<
 <p>Constructor for <code>Application</code>.</p><pre>Application$new(middleware = list(), content_type = "text/plain", ...)
 </pre>
 <ul>
-<li><p><code>middleware</code> :: <code>list</code> of <a href='Middleware.html'>Middleware</a><br />
+<li><p><strong><code>middleware</code></strong> :: <code>list</code> of <a href='Middleware.html'>Middleware</a><br />
 List of middlewares.</p></li>
-<li><p><code>content_type</code> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
+<li><p><strong><code>content_type</code></strong> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
 Default response body content (media) type. <code>"text/plain"</code> by default.</p></li>
+<li><p><strong><code>...</code></strong> <br />
+Not used at the moment</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="fields"><a class="anchor" href="#fields"></a>Fields</h2>
@@ -152,16 +154,19 @@ Default response body content (media) type. <code>"text/plain"</code> by default
     
 
 <ul>
-<li><p><code>logger</code> :: <a href='Logger.html'>Logger</a><br />
-Logger object to trace requests process. Alternatively one can use loggers from lgr package as a
-drop-in replacement. <code>Logger</code> and loggers created by <code>lgr</code> packages share same syntax.</p></li>
-<li><p><code>content_type</code> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
+<li><p><strong><code>logger</code></strong> :: <a href='Logger.html'>Logger</a><br />
+Logger object which records events during request processing.
+Alternatively user can use loggers from lgr package as a
+drop-in replacement - <code>Logger</code> methods and loggers created by <code>lgr</code> share function signatures.</p></li>
+<li><p><strong><code>content_type</code></strong> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
 Default response body content type.</p></li>
-<li><p><code>HTTPError</code> :: <code>HTTPErrorFactory</code><br />
-Helper to raise HTTP errors.</p></li>
-<li><p><code>ContentHandlers</code> :: <code>ContentHandler</code><br />
+<li><p><strong><code>HTTPError</code></strong> :: <code>HTTPErrorFactory</code><br />
+Class which raises HTTP errors. Global <a href='HTTPError.html'>HTTPError</a> is used by default. In theory
+user can replace it with his own class (see <code>RestRserve:::HTTPErrorFactory</code>). However we believe
+in the majority of the cases using <a href='HTTPError.html'>HTTPError</a> will be enough.</p></li>
+<li><p><strong><code>ContentHandlers</code></strong> :: <code>ContentHandler</code><br />
 Helper to decode request body and encode response body.</p></li>
-<li><p><code>endpoints</code> :: <code>named list()</code><br />
+<li><p><strong><code>endpoints</code></strong> :: <code>named list()</code><br />
 Prints all the registered routes with allowed methods.</p></li>
 </ul>
 
@@ -170,7 +175,7 @@ Prints all the registered routes with allowed methods.</p></li>
     
 
 <ul>
-<li><p><code>add_route(path, method, FUN, match = c("exact", "partial", "regex"), ...)</code><br />
+<li><p><strong><code>add_route</code></strong><code>(path, method, FUN, match = c("exact", "partial", "regex"), ...)</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/invisible.html'>invisible(self)</a></code> - Application <br />
 Adds endpoint and register user-supplied R function as a handler.</p>
 <p>Allowed methods at the moment: GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH.</p>
@@ -186,28 +191,28 @@ Adds endpoint and register user-supplied R function as a handler.</p>
 exception (call <code><a href='raise.html'>raise()</a></code> or <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code>).</p>
 <p>Both <code>response</code> and <code>request</code> objects modified in-place and internally
 passed further to RestRserve execution pipeline.</p></li>
-<li><p><code>add_get(path, FUN, match = c("exact", "partial", "regex"), ..., add_head = TRUE)</code><br />
+<li><p><strong><code>add_get</code></strong><code>(path, FUN, match = c("exact", "partial", "regex"), ..., add_head = TRUE)</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code>any</code>, <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/invisible.html'>invisible(self)</a></code> - Application <br />
 Shorthand to <code>add_route</code> with <code>GET</code> method. With <code>add_head = TRUE</code> HEAD method
 handlers will be added (with <code>add_head()</code>).</p></li>
-<li><p><code>add_post(path, FUN, match = c("exact", "partial", "regex"), ...)</code><br />
+<li><p><strong><code>add_post</code></strong><code>(path, FUN, match = c("exact", "partial", "regex"), ...)</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code>any</code> -&gt; <code><a href='https://rdrr.io/r/base/invisible.html'>invisible(self)</a></code> - Application <br />
 Shorthand to <code>add_route</code> with <code>POST</code> method.</p></li>
-<li><p><code>add_static(path, file_path, content_type = NULL, ...)</code><br />
+<li><p><strong><code>add_static</code></strong><code>(path, file_path, content_type = NULL, ...)</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code>any</code> -&gt; <code><a href='https://rdrr.io/r/base/invisible.html'>invisible(self)</a></code> - Application <br />
 Adds GET method to serve file or directory at <code>file_path</code>.</p>
 <p>If <code>content_type = NULL</code> then MIME code <code>content_type</code>  will be inferred
 automatically (from file extension).</p>
 <p>If it will be impossible to guess about file type then <code>content_type</code> will
 be set to <code>"application/octet-stream"</code>.</p></li>
-<li><p><code>append_middleware(...)</code><br />
+<li><p><strong><code>append_middleware</code></strong><code>(...)</code><br />
 <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> of <a href='Middleware.html'>Middleware</a> -&gt; <code><a href='https://rdrr.io/r/base/invisible.html'>invisible(self)</a></code> - Application <br />
 Appends middleware to handlers pipeline.</p></li>
-<li><p><code>process_request(request)</code><br />
+<li><p><strong><code>process_request</code></strong><code>(request)</code><br />
 <a href='Request.html'>Request</a> -&gt; <a href='Response.html'>Response</a><br />
 Process incoming request and generate <a href='Response.html'>Response</a> object.
 Useful for tests your handlers before deploy application.</p></li>
-<li><p><code>run(http_port = 8080, ..., background = FALSE)</code><br />
+<li><p><strong><code>run</code></strong><code>(http_port = 8080, ..., background = FALSE)</code><br />
 <code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>, <code>any</code>, <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> -&gt; <code>NULL</code> <br />
 Starts RestRserve application from current R session.</p><ul>
 <li><p><code>http_port</code> - http port for application. Negative values (such as -1)
@@ -217,11 +222,11 @@ means not to expose plain http.</p></li>
 <li><p><code>background</code> - whether to try to launch in background process on UNIX
 systems. Ignored on windows.</p></li>
 </ul></li>
-<li><p><code>add_openapi(path = "/openapi.yaml", file_path = "openapi.yaml")</code>
+<li><p><strong><code>add_openapi</code></strong><code>(path = "/openapi.yaml", file_path = "openapi.yaml")</code>
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code>named list()</code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/invisible.html'>invisible(self)</a></code> - Application <br />
 Adds endpoint to serve <a href='https://www.openapis.org/'>OpenAPI</a> description of
 available methods.</p></li>
-<li><p><code>add_swagger_ui(path = "/swagger", path_openapi = "/openapi.yaml", use_cdn = TRUE, path_swagger_assets = "/__swagger__/", file_path = "swagger-ui.html")</code><br />
+<li><p><strong><code>add_swagger_ui</code></strong><code>(path = "/swagger", path_openapi = "/openapi.yaml", use_cdn = TRUE, path_swagger_assets = "/__swagger__/", file_path = "swagger-ui.html")</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/invisible.html'>invisible(self)</a></code> - Application <br />
 Adds endpoint to show <a href='https://swagger.io/tools/swagger-ui/'>Swagger UI</a>.</p></li>
 </ul>
@@ -298,17 +303,17 @@ Adds endpoint to show <a href='https://swagger.io/tools/swagger-ui/'>Swagger UI<
 <span class='no'>desc_rq</span> <span class='kw'>=</span> <span class='no'>Request</span>$<span class='fu'>new</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"/desc"</span>)
 <span class='no'>say_rq</span> <span class='kw'>=</span> <span class='no'>Request</span>$<span class='fu'>new</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"/say/anonym"</span>, <span class='kw'>parameters_query</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"message"</span> <span class='kw'>=</span> <span class='st'>"Hola"</span>))
 <span class='co'># process prepared requests</span>
-<span class='no'>app</span>$<span class='fu'>process_request</span>(<span class='no'>not_found_rq</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 08:50:01.239411","level":"INFO","name":"MW Logger","pid":13266,"msg":"Incomming request (id 4b643760-dea8-11e9-af00-42010a14039d): /no"}
-#&gt; {"timestamp":"2019-09-24 08:50:01.242611","level":"INFO","name":"MW Logger","pid":13266,"msg":"Outgoing response (id 4b643760-dea8-11e9-af00-42010a14039d): 404 Not Found"}</div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
+<span class='no'>app</span>$<span class='fu'>process_request</span>(<span class='no'>not_found_rq</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 11:01:12.904618","level":"INFO","name":"MW Logger","pid":13293,"msg":"Incomming request (id 9f4515b8-deba-11e9-9d4f-42010a14000b): /no"}
+#&gt; {"timestamp":"2019-09-24 11:01:12.907189","level":"INFO","name":"MW Logger","pid":13293,"msg":"Outgoing response (id 9f4515b8-deba-11e9-9d4f-42010a14000b): 404 Not Found"}</div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
 #&gt;   status code: 404 Not Found
-#&gt;   content-type: text/plain</div><div class='input'><span class='no'>app</span>$<span class='fu'>process_request</span>(<span class='no'>status_rq</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 08:50:01.281870","level":"INFO","name":"MW Logger","pid":13266,"msg":"Incomming request (id 4b64633e-dea8-11e9-af00-42010a14039d): /status"}
-#&gt; {"timestamp":"2019-09-24 08:50:01.316864","level":"INFO","name":"MW Logger","pid":13266,"msg":"Outgoing response (id 4b64633e-dea8-11e9-af00-42010a14039d): 200 OK"}</div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
+#&gt;   content-type: text/plain</div><div class='input'><span class='no'>app</span>$<span class='fu'>process_request</span>(<span class='no'>status_rq</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 11:01:12.944160","level":"INFO","name":"MW Logger","pid":13293,"msg":"Incomming request (id 9f453fa2-deba-11e9-9d4f-42010a14000b): /status"}
+#&gt; {"timestamp":"2019-09-24 11:01:12.978962","level":"INFO","name":"MW Logger","pid":13293,"msg":"Outgoing response (id 9f453fa2-deba-11e9-9d4f-42010a14000b): 200 OK"}</div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
 #&gt;   status code: 200 OK
-#&gt;   content-type: text/plain</div><div class='input'><span class='no'>app</span>$<span class='fu'>process_request</span>(<span class='no'>desc_rq</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 08:50:01.328165","level":"INFO","name":"MW Logger","pid":13266,"msg":"Incomming request (id 4b648c2e-dea8-11e9-af00-42010a14039d): /desc"}
-#&gt; {"timestamp":"2019-09-24 08:50:01.328979","level":"INFO","name":"MW Logger","pid":13266,"msg":"Outgoing response (id 4b648c2e-dea8-11e9-af00-42010a14039d): 200 OK"}</div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
+#&gt;   content-type: text/plain</div><div class='input'><span class='no'>app</span>$<span class='fu'>process_request</span>(<span class='no'>desc_rq</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 11:01:12.989632","level":"INFO","name":"MW Logger","pid":13293,"msg":"Incomming request (id 9f456806-deba-11e9-9d4f-42010a14000b): /desc"}
+#&gt; {"timestamp":"2019-09-24 11:01:12.990308","level":"INFO","name":"MW Logger","pid":13293,"msg":"Outgoing response (id 9f456806-deba-11e9-9d4f-42010a14000b): 200 OK"}</div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
 #&gt;   status code: 200 OK
-#&gt;   content-type: text/plain</div><div class='input'><span class='no'>app</span>$<span class='fu'>process_request</span>(<span class='no'>say_rq</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 08:50:01.331096","level":"INFO","name":"MW Logger","pid":13266,"msg":"Incomming request (id 4b64b942-dea8-11e9-af00-42010a14039d): /say/anonym"}
-#&gt; {"timestamp":"2019-09-24 08:50:01.332017","level":"INFO","name":"MW Logger","pid":13266,"msg":"Outgoing response (id 4b64b942-dea8-11e9-af00-42010a14039d): 200 OK"}</div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
+#&gt;   content-type: text/plain</div><div class='input'><span class='no'>app</span>$<span class='fu'>process_request</span>(<span class='no'>say_rq</span>)</div><div class='output co'>#&gt; {"timestamp":"2019-09-24 11:01:12.992154","level":"INFO","name":"MW Logger","pid":13293,"msg":"Incomming request (id 9f45925e-deba-11e9-9d4f-42010a14000b): /say/anonym"}
+#&gt; {"timestamp":"2019-09-24 11:01:12.993010","level":"INFO","name":"MW Logger","pid":13293,"msg":"Outgoing response (id 9f45925e-deba-11e9-9d4f-42010a14000b): 200 OK"}</div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
 #&gt;   status code: 200 OK
 #&gt;   content-type: text/plain</div><div class='input'>
 # run app
