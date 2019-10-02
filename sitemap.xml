@@ -22,6 +22,9 @@
     <loc>http://restrserve.org/reference/ContentHandlers.html</loc>
   </url>
   <url>
+    <loc>http://restrserve.org/reference/HTTPDate-class.html</loc>
+  </url>
+  <url>
     <loc>http://restrserve.org/reference/HTTPError.html</loc>
   </url>
   <url>
@@ -38,9 +41,6 @@
   </url>
   <url>
     <loc>http://restrserve.org/reference/Router.html</loc>
-  </url>
-  <url>
-    <loc>http://restrserve.org/reference/http-date.html</loc>
   </url>
   <url>
     <loc>http://restrserve.org/reference/openapi.html</loc>

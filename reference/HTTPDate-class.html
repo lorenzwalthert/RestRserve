@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dealing with HTTP Dates — to_http_date • RestRserve</title>
+<title>HTTP Date class — HTTPDate-class • RestRserve</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Dealing with HTTP Dates — to_http_date" />
-<meta property="og:description" content="Convert POSIXct to HTTP Date and vice versa." />
+<meta property="og:title" content="HTTP Date class — HTTPDate-class" />
+<meta property="og:description" content="Conversions between POSIXct to HTTP Date objects." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,29 +120,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Dealing with HTTP Dates</h1>
-    <small class="dont-index">Source: <a href='https://github.com/dselivanov/RestRserve/blob/master/R/http_date.R'><code>R/http_date.R</code></a></small>
-    <div class="hidden name"><code>http-date.Rd</code></div>
+    <h1>HTTP Date class</h1>
+    <small class="dont-index">Source: <a href='https://github.com/dselivanov/RestRserve/blob/master/R/HTTPDate.R'><code>R/HTTPDate.R</code></a></small>
+    <div class="hidden name"><code>HTTPDate-class.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Convert POSIXct to HTTP Date and vice versa.</p>
+    <p>Conversions between POSIXct to HTTP Date objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>to_http_date</span>(<span class='no'>dtm</span>)
-
-<span class='fu'>from_http_date</span>(<span class='no'>str</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>dtm</th>
-      <td><p>POSIXct object.</p></td>
-    </tr>
-    <tr>
-      <th>str</th>
-      <td><p>Character string.</p></td>
+      <th>from</th>
+      <td><p><code>numeric</code>, <code>POSIXct</code> or <code>HTTPDate</code> object.</p></td>
     </tr>
     </table>
 
@@ -153,10 +146,14 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># convert POSIXct to HTTP date string</span>
-<span class='fu'>to_http_date</span>(<span class='fl'>0</span>) <span class='co'># Thu, 01 Jan 1970 00:00:00 GMT</span></div><div class='output co'>#&gt; [1] "Thu, 01 Jan 1970 00:00:00 GMT"</div><div class='input'><span class='fu'>to_http_date</span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>())</div><div class='output co'>#&gt; [1] "Sun, 29 Sep 2019 13:32:44 GMT"</div><div class='input'>
-<span class='co'># parse HTTP date string to POSIXct</span>
-<span class='fu'>from_http_date</span>(<span class='st'>"Thu, 01 Jan 1970 00:00:00 GMT"</span>) <span class='co'># .POSIXct(0, tz = "GMT")</span></div><div class='output co'>#&gt; [1] "1970-01-01 GMT"</div><div class='input'><span class='fu'>from_http_date</span>(<span class='st'>"Wed, 21 Aug 2019 15:36:48 GMT"</span>)</div><div class='output co'>#&gt; [1] "2019-08-21 15:36:48 GMT"</div><div class='input'>
-</div></pre>
+<span class='fu'>as</span>(<span class='fl'>0</span>, <span class='st'>"HTTPDate"</span>) <span class='co'># Thu, 01 Jan 1970 00:00:00 GMT</span></div><div class='output co'>#&gt; [1] "Thu, 01 Jan 1970 00:00:00 GMT"
+#&gt; attr(,"class")
+#&gt; [1] "HTTPDate"</div><div class='input'><span class='fu'>as</span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>(), <span class='st'>"HTTPDate"</span>)</div><div class='output co'>#&gt; [1] "Wed, 02 Oct 2019 08:49:23 GMT"
+#&gt; attr(,"class")
+#&gt; [1] "HTTPDate"</div><div class='input'><span class='co'># parse HTTP date string to POSIXct</span>
+<span class='no'>dt</span> <span class='kw'>=</span> <span class='st'>"Thu, 01 Jan 1970 00:00:00 GMT"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>dt</span>) <span class='kw'>=</span> <span class='st'>"HTTPDate"</span>
+<span class='fu'>as</span>(<span class='no'>dt</span>, <span class='st'>"POSIXct"</span>)</div><div class='output co'>#&gt; [1] "1970-01-01 GMT"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

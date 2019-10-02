@@ -220,7 +220,8 @@ Set response fields.</p></li>
 <li><p><strong><code>to_rserve</code></strong><code>()</code><br />
 -&gt; <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code><br />
 Convert <code>self</code> object to Rserve compatible structure.
-<a href='https://github.com/s-u/Rserve/blob/e6b2b6b10e92b6e201d34a05394b2186fda30696/src/http.c#L353-L372'>According to</a> returned list should have the following structure:</p><ul>
+<a href='https://github.com/s-u/Rserve/blob/e6b2b6b10e92b6e201d34a05394b2186fda30696/src/http.c#L353-L372'>According to http.c in Rserve</a> # nolint
+returned list should have the following structure:</p><ul>
 <li><p><code>body</code>: can be a character vector of length one or a raw vector.
 if the character vector is named "file" then the content of a file of
 that name is the body.
@@ -264,14 +265,14 @@ appended and neither <code>Content-type</code> nor <code>Content-length</code> m
 <span class='co'># set current timestamp</span>
 <span class='no'>rs</span>$<span class='fu'>set_date</span>()
 <span class='co'># set 'last-modified' header</span>
-<span class='no'>rs</span>$<span class='fu'>set_header</span>(<span class='st'>"Last-Modified"</span>, <span class='fu'><a href='http-date.html'>to_http_date</a></span>(<span class='no'>file_mtime</span>))
+<span class='no'>rs</span>$<span class='fu'>set_header</span>(<span class='st'>"Last-Modified"</span>, <span class='fu'>as</span>(<span class='no'>file_mtime</span>, <span class='st'>"HTTPDate"</span>))
 <span class='co'># print response</span>
 <span class='no'>rs</span></div><div class='output co'>#&gt; &lt;RestRserve Response&gt;
 #&gt;   status code: 200 OK
 #&gt;   content-type: text/plain
 #&gt;   &lt;Headers&gt;
-#&gt;     Date: Sun, 29 Sep 2019 13:32:44 GMT
-#&gt;     Last-Modified: Sun, 29 Sep 2019 13:31:52 GMT</div><div class='input'>
+#&gt;     Date: Wed, 02 Oct 2019 08:49:24 GMT
+#&gt;     Last-Modified: Wed, 02 Oct 2019 08:48:33 GMT</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
