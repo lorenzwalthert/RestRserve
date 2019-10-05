@@ -139,7 +139,7 @@ This class inherits <a href='Middleware.html'>Middleware</a>.</p>
     <h2 class="hasAnchor" id="construction"><a class="anchor" href="#construction"></a>Construction</h2>
 
     
-<pre>AuthMiddleware$new(auth_backend, routes, match = "exact", name = "AuthMiddleware")
+<pre>AuthMiddleware$new(auth_backend, routes, match = "exact", id = "AuthMiddleware")
 </pre>
 <ul>
 <li><p><code>auth_backend</code> :: <a href='AuthBackend.html'>AuthBackend</a><br />
@@ -148,8 +148,8 @@ Authentication backend.</p></li>
 Routes paths to protect.</p></li>
 <li><p><code>match</code> :: <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code><br />
 How routes will be matched: exact or partial (as prefix).</p></li>
-<li><p><code>name</code> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
-Middleware name.</p></li>
+<li><p><code>id</code> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
+Middleware id</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

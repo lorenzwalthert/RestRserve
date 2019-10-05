@@ -147,17 +147,27 @@ Also useful for testing.</p>
  body = list(),
  cookies = list(),
  content_type = "text/plain",
- decode = NULL)
+ decode = NULL,
+ ...)
 </pre>
 <ul>
 <li><p><strong><code>path</code></strong> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
 Character with requested path. Always starts with <code>/</code>.</p></li>
 <li><p><strong><code>method</code></strong> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
 Request HTTP method.</p></li>
+<li><p><strong><code>parameters_path</code></strong> :: <code>named list()</code><br />
+List of parameters extracted from templated path after routing.
+For example if we have some handler listening at <code>/job/{job_id}</code> and we are
+receiving request at <code>/job/1</code> then <code>parameters_path</code> will be <code><a href='https://rdrr.io/r/base/list.html'>list(job_id = "1")</a></code>.
+It is important to understand that <code>parameters_path</code> will be available
+(not empty) only after request will reach handler.
+This effectively means that <code>parameters_path</code> can be used inside handler
+and response middleware (but not request middleware!).</p></li>
 <li><p><strong><code>parameters_query</code></strong> :: <code>named list()</code><br />
 A named list with URL decoded query parameters.</p></li>
 <li><p><strong><code>parameters_body</code></strong> :: <code>named list()</code><br />
-A named list with URL decoded body parameters.</p></li>
+A named list with URL decoded body parameters. This field is helpful when request is
+a urlencoded form or a multipart form.</p></li>
 <li><p><strong><code>headers</code></strong> :: <code>named list()</code><br />
 Request HTTP headers represented as named list.</p></li>
 <li><p><strong><code>body</code></strong> :: <code>anything</code> <br />
@@ -165,10 +175,10 @@ Request body. Can be anything and in conjunction with <code>content_type</code>
 defines how HTTP body will be represented.</p></li>
 <li><p><strong><code>cookies</code></strong> :: <code>named list()</code><br />
 cookies represented as named list. <strong>Note</strong> that cookies should be provided explicitly -
-they won't be derived from <code>headers</code> (in contrast to <code>from_rserve()</code> method).</p></li>
+they won't be derived from <code>headers</code>.</p></li>
 <li><p><strong><code>content_type</code></strong> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
 HTTP content type. <strong>Note</strong> that <code>content_type</code> should be provided explicitly -
-it won't be derived from <code>headers</code> (in contrast to <code>from_rserve()</code> method).</p></li>
+it won't be derived from <code>headers</code>.</p></li>
 <li><p><strong><code>decode</code></strong> :: <code>function</code><br />
 Function to decode body for the specific content type.</p></li>
 </ul>
@@ -197,17 +207,9 @@ Request cookies.</p></li>
 <li><p><strong><code>files</code></strong> :: <code>named list()</code><br />
 Structure which contains positions and lengths of files for the multipart
 body.</p></li>
-<li><p><strong><code>parameters_path</code></strong> :: <code>named list()</code><br />
-List of parameters extracted from templated path after routing.
-For example if we have some handler listening at <code>/job/{job_id}</code> and we are
-receiving request at <code>/job/1</code> then <code>parameters_path</code> will be <code><a href='https://rdrr.io/r/base/list.html'>list(job_id = "1")</a></code>.
-It is important to understand that <code>parameters_path</code> will be available
-(not empty) only after request will reach handler.
-This effectively means that <code>parameters_path</code> can be used inside handler
-and response middleware (but not request middleware!).</p></li>
 <li><p><strong><code>context</code></strong> :: <code><a href='https://rdrr.io/r/base/environment.html'>environment()</a></code><br />
 Environment to store any data. Can be used in middlewares.</p></li>
-<li><p><strong><code>request_id</code></strong> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
+<li><p><strong><code>id</code></strong> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
 Automatically generated UUID for each request. Read only.</p></li>
 <li><p><strong><code>body_decoded</code></strong> :: <code>any</code><br />
 Body parsed according to the <code>Content-type</code> request header and <code>decode</code>
@@ -227,17 +229,6 @@ Request accepts XML response.</p></li>
     
 
 <ul>
-<li><p><strong><code>from_rserve</code></strong><code>(path = "/", parameters_query = NULL, headers = NULL, body = NULL)</code> :: <code>function</code><br /></p><ul>
-<li><p><code>path</code> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
-Character with requested path. Always starts with <code>/</code>.</p></li>
-<li><p><code>parameters_query</code> :: <code>named character()</code><br />
-A named character vector with URL decoded query parameters.</p></li>
-<li><p><code>headers</code> :: <code><a href='https://rdrr.io/r/base/raw.html'>raw()</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
-Request HTTP headers.</p></li>
-<li><p><code>body</code> :: <code><a href='https://rdrr.io/r/base/raw.html'>raw()</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code><br />
-Request body. Can be <code>NULL</code>, raw vector or named character vector for the
-URL encoded form (like a <code>parameters_query</code> parameter).</p></li>
-</ul></li>
 <li><p><strong><code>reset</code></strong><code>()</code><br />
 Resets request object. This is not useful for end user, but useful for RestRserve internals -
 resetting R6 class is much faster then initialize it.</p></li>
@@ -279,7 +270,7 @@ Extract specific file from multipart body.</p></li>
   )
 )
 <span class='co'># get request UUID</span>
-<span class='no'>rq</span>$<span class='no'>request_id</span></div><div class='output co'>#&gt; [1] "88a4d536-e4f1-11e9-babc-42010a1402c4"</div><div class='input'><span class='co'># get content accept</span>
+<span class='no'>rq</span>$<span class='no'>id</span></div><div class='output co'>#&gt; [1] "19fa9296-e754-11e9-89a8-42010a14016d"</div><div class='input'><span class='co'># get content accept</span>
 <span class='no'>rq</span>$<span class='no'>accept</span></div><div class='output co'>#&gt; [1] "*/*"</div><div class='input'><span class='co'># get request content type</span>
 <span class='no'>rq</span>$<span class='no'>content_type</span></div><div class='output co'>#&gt; [1] "text/plain"</div><div class='input'><span class='co'># get header by name (lower case)</span>
 <span class='no'>rq</span>$<span class='fu'>get_header</span>(<span class='st'>"custom-field"</span>)</div><div class='output co'>#&gt; [1] "value"</div><div class='input'><span class='co'># get query param by name</span>

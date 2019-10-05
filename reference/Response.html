@@ -217,22 +217,6 @@ Set response body.</p></li>
 <li><p><strong><code>set_response</code></strong><code>(status_code, body = NULL, content_type = self$content_type)</code><br />
 <code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>, <code>any</code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code>self</code><br />
 Set response fields.</p></li>
-<li><p><strong><code>to_rserve</code></strong><code>()</code><br />
--&gt; <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code><br />
-Convert <code>self</code> object to Rserve compatible structure.
-<a href='https://github.com/s-u/Rserve/blob/e6b2b6b10e92b6e201d34a05394b2186fda30696/src/http.c#L353-L372'>According to http.c in Rserve</a> # nolint
-returned list should have the following structure:</p><ul>
-<li><p><code>body</code>: can be a character vector of length one or a raw vector.
-if the character vector is named "file" then the content of a file of
-that name is the body.
-If the character vector is named "tmpfile" then the content of a
-temporary file of that name is the body.</p></li>
-<li><p><code>content-type</code>: must be a character vector of length one or NULL
-(if present, else default is <code>"text/plain"</code>).</p></li>
-<li><p><code>headers</code>: must be a character vector - the elements will have CRLF
-appended and neither <code>Content-type</code> nor <code>Content-length</code> may be used.</p></li>
-<li><p><code>status-code</code>: must be an integer if present (default is 200).</p></li>
-</ul></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -271,8 +255,8 @@ appended and neither <code>Content-type</code> nor <code>Content-length</code> m
 #&gt;   status code: 200 OK
 #&gt;   content-type: text/plain
 #&gt;   &lt;Headers&gt;
-#&gt;     Date: Wed, 02 Oct 2019 08:49:24 GMT
-#&gt;     Last-Modified: Wed, 02 Oct 2019 08:48:33 GMT</div><div class='input'>
+#&gt;     Date: Sat, 05 Oct 2019 09:40:01 GMT
+#&gt;     Last-Modified: Sat, 05 Oct 2019 09:39:10 GMT</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
