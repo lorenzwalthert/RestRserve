@@ -232,9 +232,9 @@ Request accepts XML response.</p></li>
 <li><p><strong><code>reset</code></strong><code>()</code><br />
 Resets request object. This is not useful for end user, but useful for RestRserve internals -
 resetting R6 class is much faster then initialize it.</p></li>
-<li><p><strong><code>get_header</code></strong><code>(name)</code><br />
-<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
-Get request header by name.</p></li>
+<li><p><strong><code>get_header</code></strong><code>(name, default = NULL)</code><br />
+<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code><br />
+Get HTTP response header value. If requested header is empty returns <code>default</code>.</p></li>
 <li><p><strong><code>get_param_query</code></strong><code>(name)</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
 Get request query parameter by name.</p></li>
@@ -270,7 +270,7 @@ Extract specific file from multipart body.</p></li>
   )
 )
 <span class='co'># get request UUID</span>
-<span class='no'>rq</span>$<span class='no'>id</span></div><div class='output co'>#&gt; [1] "19fa9296-e754-11e9-89a8-42010a14016d"</div><div class='input'><span class='co'># get content accept</span>
+<span class='no'>rq</span>$<span class='no'>id</span></div><div class='output co'>#&gt; [1] "59ed4fce-f7d0-11e9-986c-42010a140007"</div><div class='input'><span class='co'># get content accept</span>
 <span class='no'>rq</span>$<span class='no'>accept</span></div><div class='output co'>#&gt; [1] "*/*"</div><div class='input'><span class='co'># get request content type</span>
 <span class='no'>rq</span>$<span class='no'>content_type</span></div><div class='output co'>#&gt; [1] "text/plain"</div><div class='input'><span class='co'># get header by name (lower case)</span>
 <span class='no'>rq</span>$<span class='fu'>get_header</span>(<span class='st'>"custom-field"</span>)</div><div class='output co'>#&gt; [1] "value"</div><div class='input'><span class='co'># get query param by name</span>

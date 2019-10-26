@@ -139,7 +139,7 @@
     
 <pre>Response$new(body = "",
              content_type = 'text/plain',
-             headers = list_named(),
+             headers = structure(list(), names = character(0)),
              status_code = 200L,
              encode = NULL)
 </pre>
@@ -184,9 +184,9 @@ Set status code for response. See <a href='https://developer.mozilla.org/en-US/d
 <li><p><strong><code>has_header</code></strong><code>(name)</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code><br />
 Determine whether or not the response header exists.</p></li>
-<li><p><strong><code>get_header</code></strong><code>(name)</code><br />
-<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code><br />
-Get HTTP response header value.</p></li>
+<li><p><strong><code>get_header</code></strong><code>(name, default = NULL)</code><br />
+<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> -&gt; <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code><br />
+Get HTTP response header value. If requested header is empty returns <code>default</code>.</p></li>
 <li><p><strong><code>set_header</code></strong><code>(name, value)</code><br />
 <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>, <code><a href='https://rdrr.io/r/base/character.html'>character()</a></code> -&gt; <code>self</code><br />
 Set HTTP response header. <code>Content-type</code> and <code>Content-length</code> headers not
@@ -255,8 +255,8 @@ Set response fields.</p></li>
 #&gt;   status code: 200 OK
 #&gt;   content-type: text/plain
 #&gt;   &lt;Headers&gt;
-#&gt;     Date: Sat, 05 Oct 2019 09:40:01 GMT
-#&gt;     Last-Modified: Sat, 05 Oct 2019 09:39:10 GMT</div><div class='input'>
+#&gt;     Date: Sat, 26 Oct 2019 09:09:44 GMT
+#&gt;     Last-Modified: Sat, 26 Oct 2019 09:08:46 GMT</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

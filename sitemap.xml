@@ -19,6 +19,12 @@
     <loc>http://restrserve.org/reference/AuthMiddleware.html</loc>
   </url>
   <url>
+    <loc>http://restrserve.org/reference/BackendRserve.html</loc>
+  </url>
+  <url>
+    <loc>http://restrserve.org/reference/CORSMiddleware.html</loc>
+  </url>
+  <url>
     <loc>http://restrserve.org/reference/ContentHandlers.html</loc>
   </url>
   <url>
