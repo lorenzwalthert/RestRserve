@@ -2,7 +2,7 @@ pandoc: '2.2'
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
-  quick-start: quick-start.html
+  RestRserve: RestRserve.html
 urls:
   reference: http://restrserve.org/reference
   article: http://restrserve.org/articles
