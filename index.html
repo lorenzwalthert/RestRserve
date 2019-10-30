@@ -79,8 +79,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#restrserve" class="anchor"></a>RestRserve</h1></div>
 
-<p><strong>RestRserve is still work in progress - while we try hard to have stable API expect some breaking changes.</strong></p>
-<p><a href="https://github.com/dselivanov/RestRserve">RestRserve</a> is an R web API framework for building <strong>high-performance microservices and app backends</strong>. Thanks to <a href="https://github.com/s-u/Rserve">Rserve</a> it is <strong>parallel by design</strong>. It will handle incoming requests in parallel - each request in a separate fork (all the credits for that should go to <a href="https://github.com/s-u">Simon Urbanek</a>).</p>
+<p><a href="https://github.com/dselivanov/RestRserve">RestRserve</a> is an R web API framework for building <strong>high-performance</strong> AND <strong>robust</strong> microservices and app backends. Thanks to <a href="https://github.com/s-u/Rserve">Rserve</a> it is <strong>parallel by design</strong>. It will handle incoming requests in parallel - each request in a separate fork (all the credits should go to <a href="https://github.com/s-u">Simon Urbanek</a>).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -106,7 +105,8 @@
 <a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">FUN =</span> <span class="cf">function</span>(request, response) {</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">    response<span class="op">$</span><span class="kw">set_body</span>(<span class="st">"Hello from RestRserve"</span>)</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">  })</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">app<span class="op">$</span><span class="kw">run</span>(<span class="dt">http_port =</span> <span class="dv">8080</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-8" data-line-number="8">backend =<span class="st"> </span>BackendRserve<span class="op">$</span><span class="kw">new</span>()</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">backend<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/start.html">start</a></span>(app, <span class="dt">http_port =</span> <span class="dv">8080</span>)</a></code></pre></div>
 <p>Now you can type <code>http://localhost:8080/hello</code> in your favourite browser and see (surprisingly!) <em>Hello from RestRserve</em>.</p>
 <p>Please follow <a href="./articles/quick-start.html">quick start article on http://restrserve.org/</a> for more details.</p>
 </div>
@@ -120,13 +120,14 @@
 <li>Allows to build <strong>high performance REST API</strong> ( &gt; 2000 req/sec per CPU core)</li>
 <li>Build <strong>safe and secure applications</strong> - RestRserve supports <em>https</em>, provides building blocks for basic/token authentication</li>
 <li>Concise and intuitive syntax</li>
-<li>Allows to <strong>raise meaningful http errors</strong> and interrupt request handling from any place of your code</li>
+<li>
+<strong>Raise meaningful http errors</strong> and allows to interrupt request handling from any place of the user code</li>
 <li>Comes with <strong>many examples</strong> - see <code>inst/examples</code>
 </li>
 <li>Saves you from boilerplate code:
 <ul>
-<li>automatically <strong>lazily</strong> decodes request body of common formats</li>
-<li>automatically encodes response body for common formats</li>
+<li>automatically <strong>lazily</strong> decodes request body from the common formats</li>
+<li>automatically encodes response body to the common formats</li>
 <li>automatically parses URI templates (such as <code>/get/{item_id}</code>)</li>
 <li>helps to expose OpenAPI and Swagger/Redoc/Rapidoc UI</li>
 </ul>
